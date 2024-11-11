@@ -47,7 +47,7 @@ export default function LoginScreen({ navigation }) {
       </TouchableOpacity>
 
       {/* "Forgotten Password?" link */}
-      <TouchableOpacity onPress={() => navigation.navigate('ForgottenPasswordScreen')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Forgotten Password')}>
         <Text style={styles.forgotPassword}>Forgotten Password?</Text>
       </TouchableOpacity>
 
@@ -57,7 +57,10 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.separator} />
       </View>
 
-      <Text style={styles.createAccount}>Create New Account</Text>
+      {/* "Create New Account" link */}
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <Text style={styles.createAccount}>Create New Account</Text>
+      </TouchableOpacity>
     </View>
   );
 }
