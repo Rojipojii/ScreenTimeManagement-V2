@@ -1,0 +1,105 @@
+import React from 'react';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { PieChart } from 'react-native-chart-kit';
+import { ProgressBar } from 'react-native-paper';
+
+const DashboardScreen = () => {
+  // Example data for PieChart
+  const screenUsageData = [
+    { name: 'Social Media', population: 45, color: '#f44336', legendFontColor: '#7F7F7F', legendFontSize: 12 },
+    { name: 'Entertainment', population: 30, color: '#2196F3', legendFontColor: '#7F7F7F', legendFontSize: 12 },
+    { name: 'Games', population: 25, color: '#FFCE56', legendFontColor: '#7F7F7F', legendFontSize: 12 }
+  ];
+
+  return (
+    <ScrollView style={styles.container}>
+      {/* User Info */}
+      <View style={styles.userInfo}>
+        <Image source={{ uri: 'https://example.com/user-avatar.png' }} style={styles.avatar} />
+        <View>
+          <Text style={styles.userName}>Apurva Nepal</Text>
+          <Text style={styles.date}>28 May 2024</Text>
+        </View>
+      </View>
+
+      {/* Screen Usage Summary */}
+      <View style={styles.usageSummary}>
+        <Text style={styles.sectionTitle}>Screen Usage Summary</Text>
+        <PieChart
+          data={screenUsageData}
+          width={250}
+          height={150}
+          chartConfig={{
+            backgroundColor: '#1cc910',
+            backgroundGradientFrom: '#eff3ff',
+            backgroundGradientTo: '#efefef',
+            decimalPlaces: 2,
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          }}
+          accessor="population"
+          backgroundColor="transparent"
+          paddingLeft="15"
+          absolute
+        />
+      </View>
+
+      {/* Current Goals */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Current Goals</Text>
+        <ScrollView horizontal>
+          {[1, 2, 3].map((goal, index) => (
+            <View key={index} style={styles.goalCard}>
+              <Text style={styles.goalText}>Limit Games</Text>
+              <Text style={styles.progressText}>Progress</Text>
+              <ProgressBar progress={0.37} color="#4caf50" style={styles.progressBar} />
+              <Text style={styles.percentageText}>37%</Text>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+
+      {/* Usage Chart */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Usage Chart</Text>
+        <View style={styles.usageChart}>
+          {/* Simulated bar chart using simple views */}
+          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
+            <View key={index} style={styles.chartBar}>
+              <View style={[styles.bar, { height: `${(index + 1) * 10}%` }]} />
+              <Text style={styles.chartLabel}>{day}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff', padding: 10 },
+  userInfo: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
+  avatar: { width: 50, height: 50, borderRadius: 25, marginRight: 10 },
+  userName: { fontSize: 18, fontWeight: 'bold' },
+  date: { fontSize: 14, color: '#888' },
+  usageSummary: { alignItems: 'center', marginBottom: 20 },
+  section: { marginBottom: 20 },
+  sectionTitle: { fontSize: 16, fontWeight: 'bold', marginBottom: 10 },
+  goalCard: {
+    backgroundColor: '#2196F3',
+    borderRadius: 10,
+    width: 120,
+    padding: 10,
+    marginHorizontal: 5,
+    alignItems: 'center'
+  },
+  goalText: { color: '#fff', fontSize: 14, fontWeight: 'bold' },
+  progressText: { color: '#fff', fontSize: 12, marginTop: 5 },
+  progressBar: { width: '100%', height: 8, borderRadius: 5, marginVertical: 5 },
+  percentageText: { color: '#fff', fontSize: 12 },
+  usageChart: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20 },
+  chartBar: { alignItems: 'center' },
+  bar: { width: 20, backgroundColor: '#FFCE56', borderRadius: 5 },
+  chartLabel: { fontSize: 12, marginTop: 5, color: '#555' },
+});
+
+export default DashboardScreen;
