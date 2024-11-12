@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
-import { CheckBox } from '@react-native-community/checkbox';
+import CheckBox from '@react-native-community/checkbox';
 
 export default function RegisterScreen({ navigation }) {
   const [isChecked, setIsChecked] = useState(false);
