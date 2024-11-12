@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function LoginScreen({ navigation }) {
-  // State to manage username, password, and error message
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = () => {
-    // Check if username or password is empty
     if (!username || !password) {
       setError('Please fill in both fields.');
     } else {
       setError('');
-      // Proceed with login logic, for example, navigate to the next screen
-      navigation.navigate('Home'); // Replace 'Home' with your desired screen
+      navigation.navigate('Home');
     }
   };
 
@@ -39,14 +36,12 @@ export default function LoginScreen({ navigation }) {
         onChangeText={setPassword}
       />
 
-      {/* Display error message */}
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Log In</Text>
       </TouchableOpacity>
 
-      {/* "Forgotten Password?" link */}
       <TouchableOpacity onPress={() => navigation.navigate('Forgotten Password')}>
         <Text style={styles.forgotPassword}>Forgotten Password?</Text>
       </TouchableOpacity>
@@ -57,9 +52,13 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.separator} />
       </View>
 
-      {/* "Create New Account" link */}
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text style={styles.createAccount}>Create New Account</Text>
+      </TouchableOpacity>
+
+      {/* Test Button */}
+      <TouchableOpacity style={styles.testButton} onPress={() => navigation.navigate('TestScreen')}>
+        <Text style={styles.testButtonText}>Test</Text>
       </TouchableOpacity>
     </View>
   );
@@ -116,5 +115,17 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 14,
     marginTop: 10,
+  },
+  testButton: {
+    backgroundColor: '#28a745',
+    paddingVertical: 10,
+    paddingHorizontal: 80,
+    borderRadius: 20,
+    marginTop: 20,
+  },
+  testButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
