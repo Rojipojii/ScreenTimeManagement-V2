@@ -5,17 +5,16 @@ import { Ionicons } from '@expo/vector-icons';
 export default function RegisterScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      {/* Top Navigation Links */}
-      <View style={styles.topNav}>
-        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.topNavText}>Sign Up</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.topNavText}>Log In</Text>
-        </TouchableOpacity>
-      </View>
+  <View style={styles.topNav}>
+    <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+      <Text style={styles.topNavTextBold}>Sign Up</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+      <Text style={styles.topNavText}>Log In</Text>
+    </TouchableOpacity>
+  </View>
 
-      <Ionicons name="person-circle-outline" size={100} color="#007AFF" />
+      <Ionicons name="person-circle-outline" size={80} color="#007AFF" style={styles.icon} />
 
       {/* Input Fields */}
       <TextInput
@@ -55,54 +54,52 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
   },
   topNav: {
     position: 'absolute',
-    top: 40,
+    top: 30,
     right: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingHorizontal: 20,
+    justifyContent: 'flex-end',
   },
   topNavText: {
     color: '#007AFF',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: 'normal',
+    marginLeft: 10, // Small space between Sign Up and Log In
   },
-  iconContainer: {
-    marginBottom: 20,
-    alignItems: 'center',
+  topNavTextBold: {
+    color: '#007AFF',
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginLeft: 10,
   },
   icon: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#007AFF',
+    marginBottom: 30, // Added space between the icon and the input field
   },
   input: {
-    width: '100%',
-    height: 50,
+    width: '80%',
+    height: 40,  // Reduced height
     borderColor: '#B0B0B0',
     borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    marginBottom: 15,
+    borderRadius: 6,  // Reduced border radius
+    paddingHorizontal: 12,  // Reduced padding
+    marginBottom: 12,  // Reduced margin
     backgroundColor: '#F0F0F0',
   },
   button: {
-    width: '100%',
-    height: 50,
+    width: '80%',
+    height: 45,  // Reduced height
     backgroundColor: '#007AFF',
-    borderRadius: 8,
+    borderRadius: 6,  // Reduced border radius
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: 80,  // Reduced margin
   },
   buttonText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 14,  // Reduced font size
     fontWeight: 'bold',
   },
 });

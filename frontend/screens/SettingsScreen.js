@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const SettingsScreen = () => {
+const SettingsScreen = ({ navigation }) => {
   // Example data for settings options
   const settingsOptions = [
     { id: '1', title: 'Account' },
@@ -41,12 +41,31 @@ const SettingsScreen = () => {
         <Icon name="logout" size={24} color="red" />
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNavigation}>
+        <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
+          <Text style={styles.navIcon}>🏠</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Calendar')}>
+          <Text style={styles.navIcon}>📅</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.navIcon}>➕</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
+          <Text style={styles.navIcon}>🔔</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+          <Text style={styles.navIcon}>⚙️</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', padding: 16 },
+  container: { flex: 1, backgroundColor: '#fff', padding: 16, paddingBottom: 80 },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -75,6 +94,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   logoutText: { color: 'red', fontSize: 16, marginLeft: 8 },
+  bottomNavigation: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 15,
+    borderTopWidth: 1,
+    borderTopColor: '#EEEEEE',
+    backgroundColor: '#FFFFFF',
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+  },
+  navIcon: {
+    fontSize: 20,
+  },
 });
 
 export default SettingsScreen;

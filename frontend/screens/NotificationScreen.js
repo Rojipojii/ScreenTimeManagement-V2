@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const notifications = [
   {
@@ -22,11 +22,11 @@ const notifications = [
     title: 'Running',
     description: 'Running 10 mins everyday',
     status: 'In Progress',
-    icon: 'running',
+    icon: 'run',
   },
 ];
 
-const NotificationPage = () => {
+const NotificationPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -58,20 +58,20 @@ const NotificationPage = () => {
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNavigation}>
-        <TouchableOpacity>
-          <Icon name="home" size={24} color="#4A90E2" />
+        <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
+          <Text style={styles.navIcon}>🏠</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Calendar')}>
+          <Text style={styles.navIcon}>📅</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Icon name="calendar" size={24} color="#4A90E2" />
+          <Text style={styles.navIcon}>➕</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Icon name="plus-circle" size={36} color="#4A90E2" />
+        <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+          <Text style={styles.navIcon}>🔔</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Icon name="bell" size={24} color="#4A90E2" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Icon name="cog" size={24} color="#4A90E2" />
+        <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+          <Text style={styles.navIcon}>⚙️</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -141,6 +141,12 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#EEEEEE',
     backgroundColor: '#FFFFFF',
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+  },
+  navIcon: {
+    fontSize: 20,
   },
 });
 

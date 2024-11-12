@@ -3,8 +3,7 @@ import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'rea
 import { PieChart } from 'react-native-chart-kit';
 import { ProgressBar } from 'react-native-paper';
 
-const DashboardScreen = () => {
-  // Example data for PieChart
+const DashboardScreen = ({ navigation }) => {
   const screenUsageData = [
     { name: 'Social Media', population: 45, color: '#f44336', legendFontColor: '#7F7F7F', legendFontSize: 12 },
     { name: 'Entertainment', population: 30, color: '#2196F3', legendFontColor: '#7F7F7F', legendFontSize: 12 },
@@ -12,66 +11,86 @@ const DashboardScreen = () => {
   ];
 
   return (
-    <ScrollView style={styles.container}>
-      {/* User Info */}
-      <View style={styles.userInfo}>
-        <Image source={{ uri: 'https://example.com/user-avatar.png' }} style={styles.avatar} />
-        <View>
-          <Text style={styles.userName}>Apurva Nepal</Text>
-          <Text style={styles.date}>28 May 2024</Text>
+    <View style={styles.container}>
+      <ScrollView>
+        {/* User Info */}
+        <View style={styles.userInfo}>
+          <Image source={{ uri: 'https://example.com/user-avatar.png' }} style={styles.avatar} />
+          <View>
+            <Text style={styles.userName}>Apurva Nepal</Text>
+            <Text style={styles.date}>28 May 2024</Text>
+          </View>
         </View>
-      </View>
 
-      {/* Screen Usage Summary */}
-      <View style={styles.usageSummary}>
-        <Text style={styles.sectionTitle}>Screen Usage Summary</Text>
-        <PieChart
-          data={screenUsageData}
-          width={250}
-          height={150}
-          chartConfig={{
-            backgroundColor: '#1cc910',
-            backgroundGradientFrom: '#eff3ff',
-            backgroundGradientTo: '#efefef',
-            decimalPlaces: 2,
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          }}
-          accessor="population"
-          backgroundColor="transparent"
-          paddingLeft="15"
-          absolute
-        />
-      </View>
-
-      {/* Current Goals */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Current Goals</Text>
-        <ScrollView horizontal>
-          {[1, 2, 3].map((goal, index) => (
-            <View key={index} style={styles.goalCard}>
-              <Text style={styles.goalText}>Limit Games</Text>
-              <Text style={styles.progressText}>Progress</Text>
-              <ProgressBar progress={0.37} color="#4caf50" style={styles.progressBar} />
-              <Text style={styles.percentageText}>37%</Text>
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-
-      {/* Usage Chart */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Usage Chart</Text>
-        <View style={styles.usageChart}>
-          {/* Simulated bar chart using simple views */}
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
-            <View key={index} style={styles.chartBar}>
-              <View style={[styles.bar, { height: `${(index + 1) * 10}%` }]} />
-              <Text style={styles.chartLabel}>{day}</Text>
-            </View>
-          ))}
+        {/* Screen Usage Summary */}
+        <View style={styles.usageSummary}>
+          <Text style={styles.sectionTitle}>Screen Usage Summary</Text>
+          <PieChart
+            data={screenUsageData}
+            width={250}
+            height={150}
+            chartConfig={{
+              backgroundColor: '#1cc910',
+              backgroundGradientFrom: '#eff3ff',
+              backgroundGradientTo: '#efefef',
+              decimalPlaces: 2,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            }}
+            accessor="population"
+            backgroundColor="transparent"
+            paddingLeft="15"
+            absolute
+          />
         </View>
+
+        {/* Current Goals */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Current Goals</Text>
+          <ScrollView horizontal>
+            {[1, 2, 3].map((goal, index) => (
+              <View key={index} style={styles.goalCard}>
+                <Text style={styles.goalText}>Limit Games</Text>
+                <Text style={styles.progressText}>Progress</Text>
+                <ProgressBar progress={0.37} color="#4caf50" style={styles.progressBar} />
+                <Text style={styles.percentageText}>37%</Text>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* Usage Chart */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Usage Chart</Text>
+          <View style={styles.usageChart}>
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
+              <View key={index} style={styles.chartBar}>
+                <View style={[styles.bar, { height: `${(index + 1) * 10}%` }]} />
+                <Text style={styles.chartLabel}>{day}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNavigation}>
+        <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
+          <Text style={styles.navIcon}>🏠</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Calendar')}>
+          <Text style={styles.navIcon}>📅</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.navIcon}>➕</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
+          <Text style={styles.navIcon}>🔔</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+          <Text style={styles.navIcon}>⚙️</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -100,6 +119,15 @@ const styles = StyleSheet.create({
   chartBar: { alignItems: 'center' },
   bar: { width: 20, backgroundColor: '#FFCE56', borderRadius: 5 },
   chartLabel: { fontSize: 12, marginTop: 5, color: '#555' },
+  bottomNavigation: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 15,
+    borderTopWidth: 1,
+    borderTopColor: '#EEEEEE',
+    backgroundColor: '#FFFFFF',
+  },
+  navIcon: { fontSize: 20 },
 });
 
 export default DashboardScreen;
