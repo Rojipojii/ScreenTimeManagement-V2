@@ -1,17 +1,12 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function ResetPasswordScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      {/* Icon */}
-      <View style={styles.iconContainer}>
-        {/* Replace with an icon image if you have one */}
-        <Image
-          source={{ uri: 'https://example.com/your-icon.png' }} // replace with your icon URL or local file
-          style={styles.icon}
-        />
-      </View>
+      <Ionicons name="person-circle-outline" size={100} color="#007AFF" />
+      
 
       {/* Instructions */}
       <Text style={styles.instructions}>
