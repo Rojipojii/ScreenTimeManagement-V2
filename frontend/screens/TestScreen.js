@@ -1,34 +1,58 @@
+// TestScreen.js
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { View, Button, StyleSheet, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-// Import screens
-// import TestScreen from './src/screens/TestScreen';
-// import CalendarScreen from './src/screens/CalendarScreen';
-// import DashboardScreen from './src/screens/DashboardScreen';
-// import LeadershipScreen from './src/screens/LeadershipScreen';
-// import NotificationScreen from './src/screens/NotificationScreen';
-// import ReportScreen from './src/screens/ReportScreen';
-// import RewardScreen from './src/screens/RewardScreen';
-// import SettingScreen from './src/screens/SettingScreen';
+const TestScreen = () => {
+  const navigation = useNavigation();
 
-const Stack = createStackNavigator();
-
-const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="TestScreen">
-        <Stack.Screen name="TestScreen" component={TestScreen} />
-        <Stack.Screen name="CalendarScreen" component={CalendarScreen} />
-        <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
-        <Stack.Screen name="LeadershipScreen" component={LeadershipScreen} />
-        <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
-        <Stack.Screen name="ReportScreen" component={ReportScreen} />
-        <Stack.Screen name="RewardScreen" component={RewardScreen} />
-        <Stack.Screen name="SettingScreen" component={SettingScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <Text style={styles.header}>Test Screen</Text>
+      <Button
+        title="Go to Calendar Screen"
+        onPress={() => navigation.navigate('CalendarScreen')}
+      />
+      <Button
+        title="Go to Dashboard Screen"
+        onPress={() => navigation.navigate('DashboardScreen')}
+      />
+      <Button
+        title="Go to Leadership Screen"
+        onPress={() => navigation.navigate('LeadershipScreen')}
+      />
+      <Button
+        title="Go to Notification Screen"
+        onPress={() => navigation.navigate('NotificationScreen')}
+      />
+      <Button
+        title="Go to Report Screen"
+        onPress={() => navigation.navigate('ReportScreen')}
+      />
+      <Button
+        title="Go to Reward Screen"
+        onPress={() => navigation.navigate('RewardScreen')}
+      />
+      <Button
+        title="Go to Setting Screen"
+        onPress={() => navigation.navigate('SettingsScreen')}
+      />
+    </View>
   );
 };
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  header: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: 'bold',
+  },
+});
+
+export default TestScreen;
