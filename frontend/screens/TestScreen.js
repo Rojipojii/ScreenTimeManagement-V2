@@ -3,14 +3,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Import screens
-import TestScreen from './src/screens/TestScreen';
-import CalendarScreen from './src/screens/CalendarScreen';
-import DashboardScreen from './src/screens/DashboardScreen';
-import LeadershipScreen from './src/screens/LeadershipScreen';
-import NotificationScreen from './src/screens/NotificationScreen';
-import ReportScreen from './src/screens/ReportScreen';
-import RewardScreen from './src/screens/RewardScreen';
-import SettingScreen from './src/screens/SettingScreen';
+// import TestScreen from './src/screens/TestScreen';
+// import CalendarScreen from './src/screens/CalendarScreen';
+// import DashboardScreen from './src/screens/DashboardScreen';
+// import LeadershipScreen from './src/screens/LeadershipScreen';
+// import NotificationScreen from './src/screens/NotificationScreen';
+// import ReportScreen from './src/screens/ReportScreen';
+// import RewardScreen from './src/screens/RewardScreen';
+// import SettingScreen from './src/screens/SettingScreen';
 
 const Stack = createStackNavigator();
 
