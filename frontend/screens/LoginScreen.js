@@ -18,7 +18,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Ionicons name="person-circle-outline" size={100} color="#007AFF" />
+      <Ionicons name="person-circle-outline" size={80} color="#007AFF" style={styles.icon} />
 
       <TextInput
         style={styles.input}
@@ -68,36 +68,44 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    paddingTop: 100,
+    alignItems: 'center', // Centers horizontally
+    justifyContent: 'center', // Centers vertically
+    padding: 15, // Reduced padding to make the container more compact
   },
   input: {
     width: '80%',
-    padding: 10,
-    borderRadius: 20,
+    padding: 8, // Reduced padding for a more compact input
+    borderRadius: 12, // Smaller border radius for the input
     backgroundColor: '#e0e0e0',
-    marginVertical: 10,
+    marginVertical: 6, // Reduced vertical margin for compact design
+    fontSize: 14, // Smaller font size for input
   },
+
+  icon: {
+    marginBottom: 15, // Added space between the icon and the input field
+  },
+  
   loginButton: {
     backgroundColor: '#007AFF',
-    paddingVertical: 10,
-    paddingHorizontal: 80,
-    borderRadius: 20,
-    marginTop: 20,
+    paddingVertical: 15, // Reduced vertical padding
+    paddingHorizontal: 40, // Reduced horizontal padding for a smaller button
+    borderRadius: 12, // Smaller border radius for the button
+    marginTop: 40, // Reduced top margin for closer alignment
   },
   loginButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 15, // Smaller font size for the button text
     fontWeight: 'bold',
   },
   forgotPassword: {
     color: '#007AFF',
-    marginTop: 15,
+    marginTop: 12, // Reduced margin for spacing
+    fontSize: 14, // Smaller font size for the forgotten password link
   },
   separatorContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 20,
+    marginVertical: 20, // Reduced vertical margin for separation
   },
   separator: {
     flex: 1,
@@ -107,25 +115,27 @@ const styles = StyleSheet.create({
   orText: {
     marginHorizontal: 10,
     color: '#aaa',
+    fontSize: 12, // Smaller font size for "OR" text
   },
   createAccount: {
     color: '#007AFF',
+    fontSize: 14, // Smaller font size for the create account link
   },
   errorText: {
     color: 'red',
-    fontSize: 14,
-    marginTop: 10,
+    fontSize: 12, // Smaller font size for error text
+    marginTop: 8, // Reduced margin for error message
   },
   testButton: {
     backgroundColor: '#28a745',
-    paddingVertical: 10,
-    paddingHorizontal: 80,
-    borderRadius: 20,
-    marginTop: 20,
+    paddingVertical: 8, // Reduced padding
+    paddingHorizontal: 60, // Reduced width for the button
+    borderRadius: 12, // Smaller border radius for the test button
+    marginTop: 12, // Reduced margin for closer alignment
   },
   testButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14, // Smaller font size for the test button text
     fontWeight: 'bold',
   },
 });

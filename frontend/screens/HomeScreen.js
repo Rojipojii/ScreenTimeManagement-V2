@@ -12,15 +12,15 @@ export default function SplashScreen({ navigation }) {
             source={require('../assets/logo.png')} // Replace with your logo path
           />
         </View>
-        <Text style={styles.title}>TRACKR</Text>
-      </View>
-<TouchableOpacity
-  style={styles.button}
-  onPress={() => navigation.navigate('Login')}
->
-  <Text style={styles.buttonText}>Let's Get Started</Text>
-</TouchableOpacity>
 
+      </View>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Login')}
+      >
+        <Text style={styles.buttonText}>Let's Get Started</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   logoImage: {
-    width: 80,
-    height: 80,
+    width: 200, // Increased size
+    height: 150, // Increased size
     resizeMode: 'contain',
   },
   title: {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 25,
     borderRadius: 20,
-    marginBottom: 50,
+    marginBottom: 120, // Reduced margin bottom to move the button up
   },
   buttonText: {
     color: '#fff',
