@@ -57,7 +57,7 @@ export default function LoginScreen({ navigation }) {
       </TouchableOpacity>
 
       {/* Test Button */}
-      <TouchableOpacity style={styles.testButton} onPress={() => navigation.navigate('TestScreen')}>
+      <TouchableOpacity style={styles.testButton} onPress={() => navigation.navigate('Test')}>
         <Text style={styles.testButtonText}>Test</Text>
       </TouchableOpacity>
     </View>

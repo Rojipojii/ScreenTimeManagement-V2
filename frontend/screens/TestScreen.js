@@ -11,31 +11,31 @@ const TestScreen = () => {
       <Text style={styles.header}>Test Screen</Text>
       <Button
         title="Go to Calendar Screen"
-        onPress={() => navigation.navigate('CalendarScreen')}
+        onPress={() => navigation.navigate('Calendar')}
       />
       <Button
         title="Go to Dashboard Screen"
-        onPress={() => navigation.navigate('DashboardScreen')}
+        onPress={() => navigation.navigate('Dashboard')}
       />
       <Button
         title="Go to Leadership Screen"
-        onPress={() => navigation.navigate('LeadershipScreen')}
+        onPress={() => navigation.navigate('Leadership')}
       />
       <Button
         title="Go to Notification Screen"
-        onPress={() => navigation.navigate('NotificationScreen')}
+        onPress={() => navigation.navigate('Notification')}
       />
       <Button
         title="Go to Report Screen"
-        onPress={() => navigation.navigate('ReportScreen')}
+        onPress={() => navigation.navigate('Report')}
       />
       <Button
         title="Go to Reward Screen"
-        onPress={() => navigation.navigate('RewardScreen')}
+        onPress={() => navigation.navigate('Reward')}
       />
       <Button
         title="Go to Setting Screen"
-        onPress={() => navigation.navigate('SettingsScreen')}
+        onPress={() => navigation.navigate('Settings')}
       />
     </View>
   );
