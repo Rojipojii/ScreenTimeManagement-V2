@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
+import React from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 export default function RegisterScreen({ navigation }) {
-  const [isChecked, setIsChecked] = useState(false);
-
   return (
     <View style={styles.container}>
       {/* Top Navigation Links */}
@@ -19,7 +16,6 @@ export default function RegisterScreen({ navigation }) {
 
       {/* Icon */}
       <View style={styles.iconContainer}>
-        {/* Replace with an icon image if you have one */}
         <Image
           source={{ uri: 'https://example.com/your-icon.png' }} // replace with your icon URL or local file
           style={styles.icon}
@@ -50,17 +46,8 @@ export default function RegisterScreen({ navigation }) {
         secureTextEntry={true}
       />
 
-      {/* Terms and Conditions */}
-      <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={isChecked}
-          onValueChange={setIsChecked}
-        />
-        <Text style={styles.checkboxText}>Agree with terms and conditions</Text>
-      </View>
-
       {/* Sign Up Button */}
-      <TouchableOpacity style={styles.button} disabled={!isChecked}>
+      <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
     </View>
@@ -108,16 +95,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 15,
     backgroundColor: '#F0F0F0',
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 15,
-  },
-  checkboxText: {
-    marginLeft: 8,
-    color: '#333333',
-    fontSize: 14,
   },
   button: {
     width: '100%',
