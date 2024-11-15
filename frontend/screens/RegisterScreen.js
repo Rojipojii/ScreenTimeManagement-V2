@@ -1,18 +1,54 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function RegisterScreen({ navigation }) {
+  // State variables to hold form data
+  const [username, setUsername] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // Function to handle registration
+  const handleRegister = async () => {
+    if (!username || !fullName || !email || !password) {
+      Alert.alert('All fields are required!');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://YOUR_SERVER_IP:5000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, fullName, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert('Registration successful!', 'You can now log in.');
+        navigation.navigate('Login');  // Redirect to Login screen
+      } else {
+        Alert.alert('Registration failed', data.message || 'An error occurred');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      Alert.alert('Error', 'Could not complete registration.');
+    }
+  };
+
   return (
     <View style={styles.container}>
-  <View style={styles.topNav}>
-    <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-      <Text style={styles.topNavTextBold}>Sign Up</Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-      <Text style={styles.topNavText}>Log In</Text>
-    </TouchableOpacity>
-  </View>
+      <View style={styles.topNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+          <Text style={styles.topNavTextBold}>Sign Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.topNavText}>Log In</Text>
+        </TouchableOpacity>
+      </View>
 
       <Ionicons name="person-circle-outline" size={80} color="#007AFF" style={styles.icon} />
 
@@ -21,27 +57,35 @@ export default function RegisterScreen({ navigation }) {
         style={styles.input}
         placeholder="Username"
         placeholderTextColor="#B0B0B0"
+        value={username}
+        onChangeText={setUsername}
       />
       <TextInput
         style={styles.input}
         placeholder="Full Name"
         placeholderTextColor="#B0B0B0"
+        value={fullName}
+        onChangeText={setFullName}
       />
       <TextInput
         style={styles.input}
         placeholder="E-mail"
         placeholderTextColor="#B0B0B0"
         keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         placeholderTextColor="#B0B0B0"
         secureTextEntry={true}
+        value={password}
+        onChangeText={setPassword}
       />
 
       {/* Sign Up Button */}
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
     </View>
