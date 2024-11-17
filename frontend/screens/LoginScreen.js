@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-// import axios from 'axios'; // Import axios
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
@@ -28,7 +28,12 @@ export default function LoginScreen({ navigation }) {
   
         if (response.ok && data.token) {
           console.log('Login successful! Token:', data.token); // Confirm token presence
-          console.log('Navigating to Dashboard'); // Log before navigating
+          
+          // Save user ID and token to AsyncStorage
+          await AsyncStorage.setItem('user_id', data.user_id); // Save user_id
+          await AsyncStorage.setItem('token', data.token); // Save token
+
+          console.log('Navigating to Dashboard');
           navigation.navigate('Dashboard'); // Navigate only if token is present
         } else {
           setError('Invalid credentials. Please try again.');
@@ -41,7 +46,6 @@ export default function LoginScreen({ navigation }) {
       }
     }
   };
-  
 
   return (
     <View style={styles.container}>
@@ -83,7 +87,6 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.createAccount}>Create New Account</Text>
       </TouchableOpacity>
 
-      {/* Test Button */}
       <TouchableOpacity style={styles.testButton} onPress={() => navigation.navigate('Test')}>
         <Text style={styles.testButtonText}>Test</Text>
       </TouchableOpacity>
