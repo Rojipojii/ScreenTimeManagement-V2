@@ -2,6 +2,11 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');  // Ensure correct path to sequelize instance
 
 const User = sequelize.define('User', {
+    user_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true, // Assuming it's an auto-incrementing ID
+      },
     username: {
         type: DataTypes.STRING,
         allowNull: false,
