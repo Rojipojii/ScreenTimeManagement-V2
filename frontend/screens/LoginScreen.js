@@ -1,20 +1,47 @@
-import React, { useState } from 'react'; 
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+// import axios from 'axios'; // Import axios
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!username || !password) {
       setError('Please fill in both fields.');
     } else {
       setError('');
-      navigation.navigate('Home');
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password }),
+        });
+  
+        const data = await response.json();
+  
+        console.log('Login Response:', data); // Log the full response
+  
+        if (response.ok && data.token) {
+          console.log('Login successful! Token:', data.token); // Confirm token presence
+          console.log('Navigating to Dashboard'); // Log before navigating
+          navigation.navigate('Dashboard'); // Navigate only if token is present
+        } else {
+          setError('Invalid credentials. Please try again.');
+          console.log('Login failed: Invalid credentials');
+        }
+      } catch (error) {
+        setError('Error logging in. Please try again.');
+        console.error('Login Error:', error);
+        Alert.alert('Error', 'An error occurred during login.');
+      }
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -68,44 +95,42 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center', // Centers horizontally
-    justifyContent: 'center', // Centers vertically
-    padding: 15, // Reduced padding to make the container more compact
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 15,
   },
   input: {
     width: '80%',
-    padding: 8, // Reduced padding for a more compact input
-    borderRadius: 12, // Smaller border radius for the input
+    padding: 8,
+    borderRadius: 12,
     backgroundColor: '#e0e0e0',
-    marginVertical: 6, // Reduced vertical margin for compact design
-    fontSize: 14, // Smaller font size for input
+    marginVertical: 6,
+    fontSize: 14,
   },
-
   icon: {
-    marginBottom: 15, // Added space between the icon and the input field
+    marginBottom: 15,
   },
-  
   loginButton: {
     backgroundColor: '#007AFF',
-    paddingVertical: 15, // Reduced vertical padding
-    paddingHorizontal: 40, // Reduced horizontal padding for a smaller button
-    borderRadius: 12, // Smaller border radius for the button
-    marginTop: 40, // Reduced top margin for closer alignment
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 12,
+    marginTop: 40,
   },
   loginButtonText: {
     color: '#fff',
-    fontSize: 15, // Smaller font size for the button text
+    fontSize: 15,
     fontWeight: 'bold',
   },
   forgotPassword: {
     color: '#007AFF',
-    marginTop: 12, // Reduced margin for spacing
-    fontSize: 14, // Smaller font size for the forgotten password link
+    marginTop: 12,
+    fontSize: 14,
   },
   separatorContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 20, // Reduced vertical margin for separation
+    marginVertical: 20,
   },
   separator: {
     flex: 1,
@@ -115,27 +140,27 @@ const styles = StyleSheet.create({
   orText: {
     marginHorizontal: 10,
     color: '#aaa',
-    fontSize: 12, // Smaller font size for "OR" text
+    fontSize: 12,
   },
   createAccount: {
     color: '#007AFF',
-    fontSize: 14, // Smaller font size for the create account link
+    fontSize: 14,
   },
   errorText: {
     color: 'red',
-    fontSize: 12, // Smaller font size for error text
-    marginTop: 8, // Reduced margin for error message
+    fontSize: 12,
+    marginTop: 8,
   },
   testButton: {
     backgroundColor: '#28a745',
-    paddingVertical: 8, // Reduced padding
-    paddingHorizontal: 60, // Reduced width for the button
-    borderRadius: 12, // Smaller border radius for the test button
-    marginTop: 12, // Reduced margin for closer alignment
+    paddingVertical: 8,
+    paddingHorizontal: 60,
+    borderRadius: 12,
+    marginTop: 12,
   },
   testButtonText: {
     color: '#fff',
-    fontSize: 14, // Smaller font size for the test button text
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });
