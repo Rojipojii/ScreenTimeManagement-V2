@@ -1,27 +1,28 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
+const sequelize = require('../config/db');  // Ensure your db configuration is here
 
 const ScreenTime = sequelize.define('ScreenTime', {
-  // Model attributes
+  screen_time_id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   user_id: {
     type: DataTypes.INTEGER,
-    allowNull: false, // Ensure that user_id is always provided
+    allowNull: false,
+  },
+  time_spent: {
+    type: DataTypes.INTEGER,  // In minutes or seconds
+    allowNull: false,
+  },
+  app_name: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   date: {
-    type: DataTypes.DATEONLY,  // To store date only (no time)
-    allowNull: false,  // Ensure the date is provided
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
   },
-  usage_duration: {
-    type: DataTypes.INTEGER,  // Duration in minutes
-    allowNull: false,  // Ensure the usage_duration is provided
-  },
-  screen_category: {
-    type: DataTypes.STRING,  // Category like Instagram, Facebook, etc.
-    allowNull: false,  // Ensure the screen category is provided
-  }
-}, {
-  tableName: 'screen_times',  // Name of the table in MySQL
-  timestamps: false,  // No automatic timestamps (createdAt, updatedAt)
 });
 
 module.exports = ScreenTime;

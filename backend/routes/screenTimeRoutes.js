@@ -7,4 +7,5 @@ router.get('/user/:userId', screenTimeController.getUserData);
 router.get('/screen-usage', screenTimeController.getScreenTimeData);
 router.get('/goals', screenTimeController.getGoals);
 
+
 module.exports = router;

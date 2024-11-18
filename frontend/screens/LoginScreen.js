@@ -1,19 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+import DeviceInfo from 'react-native-device-info';  // Import DeviceInfo for app usage stats
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [screenTime, setScreenTime] = useState(0);
+  const [currentApp, setCurrentApp] = useState('');
+
+  useEffect(() => {
+    // Start tracking screen time after login
+    const startTracking = async () => {
+      const appUsage = await DeviceInfo.getAppUsageStats();  // Example method for getting app usage (depends on library)
+      setCurrentApp(appUsage.appName);
+      setScreenTime(appUsage.timeSpent);  // Example; you need a proper API here for time tracking
+    };
+
+    if (username && password) {
+      startTracking();
+    }
+
+    // Clean up when leaving the screen
+    return () => {
+      // You might want to stop tracking or save data here
+      console.log('Stopped tracking for this session');
+    };
+  }, [username, password]);
 
   const handleLogin = async () => {
     if (!username || !password) {
       setError('Please fill in both fields.');
       return;
     }
-  
+
     setError('');
     try {
       const response = await fetch('http://localhost:5000/api/auth/login', {
@@ -23,28 +45,28 @@ export default function LoginScreen({ navigation }) {
         },
         body: JSON.stringify({ username, password }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok && data.token) {
         // Ensure all data is stringified
         await AsyncStorage.setItem('user_id', String(data.user?.user_id || '0')); // Default to '0' if missing
         await AsyncStorage.setItem('token', data.token);
         await AsyncStorage.setItem('username', data.user?.username || 'Guest');
         await AsyncStorage.setItem('fullname', data.user?.fullName || 'No Name Provided');
-  
+
         // Log saved values for debugging
         const storedUserId = await AsyncStorage.getItem('user_id');
         const storedToken = await AsyncStorage.getItem('token');
         const storedUsername = await AsyncStorage.getItem('username');
         const storedFullname = await AsyncStorage.getItem('fullname');
-  
+
         console.log('Verification of Stored Data:');
         console.log('User ID:', storedUserId);
         console.log('Token:', storedToken);
         console.log('Username:', storedUsername);
         console.log('Fullname:', storedFullname);
-  
+
         // Navigate to Dashboard
         navigation.navigate('Dashboard');
       } else {
@@ -55,9 +77,6 @@ export default function LoginScreen({ navigation }) {
       console.error('Login Error:', error);
     }
   };
-  
-  
-  
 
   return (
     <View style={styles.container}>
@@ -88,6 +107,15 @@ export default function LoginScreen({ navigation }) {
       <TouchableOpacity onPress={() => navigation.navigate('Forgotten Password')}>
         <Text style={styles.forgotPassword}>Forgotten Password?</Text>
       </TouchableOpacity>
+
+      {/* Display Screen Time */}
+      {screenTime > 0 && (
+        <View style={styles.screenTimeContainer}>
+          <Text style={styles.screenTimeText}>
+            Current App: {currentApp} - Time Spent: {screenTime} minutes
+          </Text>
+        </View>
+      )}
 
       <View style={styles.separatorContainer}>
         <View style={styles.separator} />
@@ -177,5 +205,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  screenTimeContainer: {
+    marginTop: 20,
+  },
+  screenTimeText: {
+    fontSize: 16,
+    color: '#333',
   },
 });
