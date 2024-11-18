@@ -1,13 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
 import { ProgressBar } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DashboardScreen = ({ navigation }) => {
+  const [userName, setUserName] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+    // Fetch user info
+    const fetchUserInfo = async () => {
+      try {
+        const name = await AsyncStorage.getItem('fullname');
+        const username = await AsyncStorage.getItem('username');
+        setFullName(name || 'No full name available');
+        setUserName(username || 'No username available');
+      } catch (error) {
+        console.error('Error fetching data from AsyncStorage: ', error);
+      }
+    };
+
+    fetchUserInfo();
+
+    // Set the current date
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    });
+    setCurrentDate(formattedDate);
+  }, []);
+
   const screenUsageData = [
     { name: 'Social Media', population: 45, color: '#f44336', legendFontColor: '#7F7F7F', legendFontSize: 12 },
     { name: 'Entertainment', population: 30, color: '#2196F3', legendFontColor: '#7F7F7F', legendFontSize: 12 },
-    { name: 'Games', population: 25, color: '#FFCE56', legendFontColor: '#7F7F7F', legendFontSize: 12 }
+    { name: 'Games', population: 25, color: '#FFCE56', legendFontColor: '#7F7F7F', legendFontSize: 12 },
   ];
 
   return (
@@ -17,8 +47,8 @@ const DashboardScreen = ({ navigation }) => {
         <View style={styles.userInfo}>
           <Image source={{ uri: 'https://example.com/user-avatar.png' }} style={styles.avatar} />
           <View>
-            <Text style={styles.userName}>Apurva Nepal</Text>
-            <Text style={styles.date}>28 May 2024</Text>
+            <Text style={styles.userName}>{userName || 'Loading...'}</Text>
+            <Text style={styles.date}>{currentDate}</Text> {/* Display dynamic date */}
           </View>
         </View>
 

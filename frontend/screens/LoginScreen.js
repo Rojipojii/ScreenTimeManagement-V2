@@ -11,41 +11,53 @@ export default function LoginScreen({ navigation }) {
   const handleLogin = async () => {
     if (!username || !password) {
       setError('Please fill in both fields.');
-    } else {
-      setError('');
-      try {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ username, password }),
-        });
+      return;
+    }
   
-        const data = await response.json();
+    setError('');
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
   
-        console.log('Login Response:', data); // Log the full response
+      const data = await response.json();
   
-        if (response.ok && data.token) {
-          console.log('Login successful! Token:', data.token); // Confirm token presence
-          
-          // Save user ID and token to AsyncStorage
-          await AsyncStorage.setItem('user_id', data.user_id); // Save user_id
-          await AsyncStorage.setItem('token', data.token); // Save token
-
-          console.log('Navigating to Dashboard');
-          navigation.navigate('Dashboard'); // Navigate only if token is present
-        } else {
-          setError('Invalid credentials. Please try again.');
-          console.log('Login failed: Invalid credentials');
-        }
-      } catch (error) {
-        setError('Error logging in. Please try again.');
-        console.error('Login Error:', error);
-        Alert.alert('Error', 'An error occurred during login.');
+      if (response.ok && data.token) {
+        // Ensure all data is stringified
+        await AsyncStorage.setItem('user_id', String(data.user?.user_id || '0')); // Default to '0' if missing
+        await AsyncStorage.setItem('token', data.token);
+        await AsyncStorage.setItem('username', data.user?.username || 'Guest');
+        await AsyncStorage.setItem('fullname', data.user?.fullName || 'No Name Provided');
+  
+        // Log saved values for debugging
+        const storedUserId = await AsyncStorage.getItem('user_id');
+        const storedToken = await AsyncStorage.getItem('token');
+        const storedUsername = await AsyncStorage.getItem('username');
+        const storedFullname = await AsyncStorage.getItem('fullname');
+  
+        console.log('Verification of Stored Data:');
+        console.log('User ID:', storedUserId);
+        console.log('Token:', storedToken);
+        console.log('Username:', storedUsername);
+        console.log('Fullname:', storedFullname);
+  
+        // Navigate to Dashboard
+        navigation.navigate('Dashboard');
+      } else {
+        setError('Invalid credentials. Please try again.');
       }
+    } catch (error) {
+      setError('Error logging in. Please try again.');
+      console.error('Login Error:', error);
     }
   };
+  
+  
+  
 
   return (
     <View style={styles.container}>
